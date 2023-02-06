@@ -15,7 +15,6 @@ void custom();
 int randomThreshold = 50;
 int attempts = 20;
 int hasHint = 1;
-int timeLimit = 5;
 
 void main()
 {
@@ -37,9 +36,8 @@ void mainMenu()
 	 printf("\n\n======== Main Menu ========\n\n");
 	 printf("1. Start Game\n");
 	 printf("2. Instructions\n");
-	 printf("3. High Score\n");
-	 printf("4. Options\n");
-	 printf("5. Exit\n");
+	 printf("3. Options\n");
+	 printf("4. Exit\n");
 	 printf("> ");
 	 scanf("%d", &choice);
 	 switch(choice) {
@@ -52,10 +50,6 @@ void mainMenu()
 			instructions();
 			break;
 		case 3:
-			printf("\n\nHighScores\n\n");
-
-			break;
-		case 4:
 			printf("\n\nChoose Difficulty\n\n");
 			options();
 			break;
