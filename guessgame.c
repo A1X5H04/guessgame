@@ -12,16 +12,33 @@ void easy();
 void medium();
 void hard();
 void custom();
+FILE *fptr;
+int guessCount;
 int randomThreshold = 50;
 int attempts = 20;
 int hasHint = 1;
+int timeLimit = 5;
 
 void main()
 {
     	char name[25];
- 	printf("========================================\n");
-	printf("Welcome to Guess Game!\n");
-	printf("========================================\n\n\n");
+
+
+    // printf(" ██████╗ ██╗   ██╗███████╗███████╗███████╗     ██████╗  █████╗ ███╗   ███╗███████╗\n");
+    // printf("██╔════╝ ██║   ██║██╔════╝██╔════╝██╔════╝    ██╔════╝ ██╔══██╗████╗ ████║██╔════╝\n");
+    // printf("██║  ███╗██║   ██║█████╗  ███████╗███████╗    ██║  ███╗███████║██╔████╔██║█████╗  \n");
+    // printf("██║   ██║██║   ██║██╔══╝  ╚════██║╚════██║    ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝  \n");
+    // printf("╚██████╔╝╚██████╔╝███████╗███████║███████║    ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗\n");
+    // printf(" ╚═════╝  ╚═════╝ ╚══════╝╚══════╝╚══════╝     ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝\n");
+    // printf("                                                                                  \n");	
+
+    printf("==============================================\n");
+    printf(" _____                    _____               \n");
+    printf("|   __|_ _ ___ ___ ___   |   __|___ _____ ___ \n");
+    printf("|  |  | | | -_|_ -|_ -|  |  |  | .'|     | -_|\n");
+    printf("|_____|___|___|___|___|  |_____|__,|_|_|_|___|\n");	
+    printf("                                              \n");
+	printf("==============================================\n\n\n");
 	printf("Please Specify your Name (Max 25): ");
 	scanf("%s", name);
 	printf("\nHello, %s!!\n", name);
@@ -33,28 +50,36 @@ void main()
 void mainMenu()
 {
 	 int choice;
-	 printf("\n\n======== Main Menu ========\n\n");
-	 printf("1. Start Game\n");
-	 printf("2. Instructions\n");
-	 printf("3. Options\n");
-	 printf("4. Exit\n");
-	 printf("> ");
+	 printf("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n");
+	 printf("░░░░░░░░░░░░🅼░🅰░🅸░🅽░░░🅼░🅴░🅽░🆄░░░░░░░░░░░░\n");
+	 printf("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n\n");
+	 printf("\n1. START GAME\n");
+	 printf("\n2. HOW TO PLAY\n");
+	 printf("\n3. CHOOSE DIFFICULTY\n");
+	 printf("\n4. EXIT GAME\n");
+	 printf("\n> ");
 	 scanf("%d", &choice);
 	 switch(choice) {
 		case 1:
-			printf("\n\nStart Game\n\n");
+	 		printf("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n");
+	 		printf("░░░░░░░░░░░░░░░🅂🅃🄰🅁🅃░🄶🄰🄼🄴░░░░░░░░░░░░░░░\n");
+	 		printf("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n\n");
 			startGame();
 			break;
 		case 2:
-			printf("\n\nHow to play\n\n");
+			printf("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n");
+	 		printf("░░░░░░░░░░░░░░░🄷🄾🅆░🅃🄾░🄿🄻🄰🅈░░░░░░░░░░░░░░\n");
+	 		printf("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n\n");
 			instructions();
 			break;
 		case 3:
-			printf("\n\nChoose Difficulty\n\n");
+			printf("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n");
+	 		printf("░░░░░░░░░🄲🄷🄾🄾🅂🄴░🄳🄸🄵🄵🄸🄲🅄🄻🅃🅈░░░░░░░░░░\n");
+	 		printf("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n\n");
 			options();
 			break;
 		default:
-			printf("\nExit Game\n");
+			printf("\nExiting Game...\n");
 			exit(0);
 			break;
 	 }
@@ -99,13 +124,15 @@ void startGame()
 
 void game()
 {
-	int randomNo, i, guess;
+	int randomNo, i, guess, choice;
+	guessCount = attempts;
 	srand(time(0));
 	printf("\n\nGenerating Random Number between 1 to %d...", randomThreshold);
 	randomNo = rand()%randomThreshold + 1;
 	sleep(rand()%5 + 1);
 	printf("\nRandom Number Generated Successfully.\n");
 	printf("\nGuess the Random Number!!\n");
+	
 	for(i =0; i<attempts; i++){
 		if(guess == randomNo){
 			printf("\nCongo! You have guess the right answer\n");
@@ -114,14 +141,69 @@ void game()
 			if(hasHint){
 				printf("\n> ");
 				scanf("%d", &guess);
+				guessCount--;
+				if (guessCount == 0)
+				{
+					printf("You failed to Guess..\n");
+					printf("Do you want to play again ?\n");
+					printf("1.Play Again\n2.Choose Difficulty\n3.Main Menu\n4.Exit Game");
+					printf("\n> ");
+					scanf("%d", &choice);
+					switch(choice)
+					{
+						case 1:
+							game();
+							break;
+						case 2:
+							options();
+							break;
+						case 3:
+							mainMenu();
+							break;
+						default:
+							exit(0);
+							break;
+					}				
+				} else
+				{
+					printf("You have %d guesses left.", guessCount);	
+				}
 				if (guess > randomNo) {
-					printf("Hint: Guess Lower.");
+					printf("\nHint: Guess Lower.");
 				} else {
-					printf("Hint: Guess Higher.");
+					printf("\nHint: Guess Higher.");
 				}
 			} else {
 				printf("\n> ");
 				scanf("%d", &guess);
+				guessCount--;
+				if (guessCount == 0)
+				{
+					printf("You failed to Guess..\n");
+					printf("Do you want to play again ?\n");
+					printf("1.Play Again\n2.Choose Difficulty\n3.Main Menu\n4.Exit Game");
+					printf("\n> ");
+					scanf("%d", &choice);
+					switch(choice)
+					{
+						case 1:
+							game();
+							break;
+						case 2:
+							options();
+							break;
+						case 3:
+							mainMenu();
+							break;
+						default:
+							exit(0);
+							break;
+					}				
+				} else
+				{
+					printf("You have %d guesses left.", guessCount);	
+				}
+				
 			}
 		}
 	}
@@ -130,7 +212,8 @@ void game()
 
 void instructions()
 {
-	printf("\n--> A random number will be generated\n--> You have to guess the random number in the lowest attempts\n--> The one who guess faster and in lowest attempts wins!!\n\n==>> You can also customize the randomness and number of attempts in the settings menu!!");
+	printf("\n--> A random number will be generated.\n--> You have to guess the random number in the limited attempts.\n--> The one who guess the number within the given attempts wins!!\n--> Try hints if you feel like it\'s hard.");
+	mainMenu();
 }
 
 
@@ -189,7 +272,7 @@ void custom()
 	int choice;
 	printf("\n\nDifficulty Choosen: Custom\n\n");
 	printf("Choose Your custom difficulty, by entering custom values in the below options..\n\n");
-	printf("\n1.Change Random Threshold \n2.Change No of Attempts \n3.Hints \n4.Change Time Limit \n5.Back to Main Menu");
+	printf("\n1.Change Random Threshold \n2.Change No of Attempts \n3.Hints\n4.Back to Main Menu");
 	printf("\n> ");
 	scanf("%d", &choice);
 	switch(choice) {
@@ -228,12 +311,10 @@ void custom()
 					break;		
 			}
 			break;
-		case 4:
-			printf("\nCurrently UnderDevelopment\n\n");
-			custom();
-			break;
 		default:
 			mainMenu();
 			break;		
 	}
 }
+
+
